@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class gracee_task_list{
+public abstract class gracee_task_list{
     protected String description;
     protected boolean isDone;
 
@@ -23,7 +23,5 @@ public class gracee_task_list{
     }
 
     @Override
-    public String toString(){
-        return "[" + getStatus() + "] " + description;
-    }
+    public abstract String toString();
 }

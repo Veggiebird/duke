@@ -9,16 +9,16 @@ public class Gracee {
         gracee_historical historical = new gracee_historical();
         List<gracee_task_list> task_list = new ArrayList<>();
 
-        System.out.println("___________________________\n");
-        System.out.println("Hello! I am Gracee! This is a gold shop.\n");
-        System.out.println("What can I do for you?\n");
-        System.out.println("Common FAQ: \n1. Shop business hour and details.\n");
-        System.out.println("2. Buying/Selling price of gold.\n");
-        System.out.println("3. List historical conversation.\n");
-        System.out.println("4. Check your task list.\n");
-        System.out.println("5. Bye.\n");
-        System.out.println("Please enter 1, 2, 3 or bye to proceed further.\n");
-        System.out.println("___________________________\n");
+        System.out.println("___________________________");
+        System.out.println("Hello! I am Gracee! This is a gold shop.");
+        System.out.println("What can I do for you?");
+        System.out.println("Common FAQ: \n1. Shop business hour and details.");
+        System.out.println("2. Buying/Selling price of gold.");
+        System.out.println("3. List historical conversation.");
+        System.out.println("4. Check your task list.");
+        System.out.println("5. Bye.");
+        System.out.println("Please enter 1, 2, 3 or bye to proceed further.");
+        System.out.println("___________________________");
 
         boolean chatLive = true;
 
@@ -73,11 +73,36 @@ public class Gracee {
 
                        switch(taskInput){
                            case "1":
-                               System.out.println("Please enter task description.");
+
+                               gracee_task_list newTask = null;
+
+                               System.out.println("Please enter task type: todo / deadline / event");
+                               String task_type = sc.nextLine();
+                               String lower_task_type = task_type.toLowerCase();
+
+                               System.out.println("Please enter task description");
                                String task_description = sc.nextLine();
 
-                               task_list.add(new gracee_task_list(task_description));
-                               System.out.println("Added task: " + task_description);
+                               if(lower_task_type.contains("todo")){
+                                   newTask = new gracee_task_todo(task_description);
+                               }else if(lower_task_type.contains("deadline")){
+                                   System.out.println("Please enter deadline");
+                                   String by = sc.nextLine();
+                                   newTask = new gracee_task_deadline(task_description,by);
+                               }else if(lower_task_type.contains("event")){
+                                   System.out.println("Please enter event start date");
+                                   String from = sc.nextLine();
+                                   System.out.println("Please enter event end date");
+                                   String to = sc.nextLine();
+                                   newTask = new gracee_task_events(task_description, from, to);
+                               }else{
+                                   System.out.println("Invalid task type");
+                                   break;
+                               }
+
+                               task_list.add(newTask);
+                               System.out.println("Added task: " + newTask);
+                               System.out.println("Now you have " + task_list.size() + " tasks in the list.");
                                break;
 
                            case "2":
@@ -147,6 +172,8 @@ public class Gracee {
                                taskMode = false;
                                break;
                        }
+
+                        System.out.println("Back to main menu.");
 
                     }
                 break;
