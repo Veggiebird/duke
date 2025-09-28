@@ -80,7 +80,7 @@ public class Gracee {
                                String task_type = sc.nextLine();
                                String lower_task_type = task_type.toLowerCase();
 
-                               System.out.println("Please enter task description");
+                               System.out.println("Please enter task description.");
                                String task_description = sc.nextLine();
 
                                if(lower_task_type.contains("todo")){
