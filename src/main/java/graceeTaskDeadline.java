@@ -1,8 +1,8 @@
-public class gracee_task_deadline extends gracee_task_list{
+public class graceeTaskDeadline extends graceeTaskList {
 
     private String by;
 
-    public gracee_task_deadline(String description, String by){
+    public graceeTaskDeadline(String description, String by){
         super(description);
         this.by = by;
     }

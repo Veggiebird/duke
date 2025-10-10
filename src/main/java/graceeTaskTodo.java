@@ -1,6 +1,6 @@
-public class gracee_task_todo extends gracee_task_list{
+public class graceeTaskTodo extends graceeTaskList {
 
-    public gracee_task_todo(String description){
+    public graceeTaskTodo(String description){
         super(description);
     }
 

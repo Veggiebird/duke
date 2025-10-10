@@ -1,11 +1,8 @@
-import java.util.List;
-import java.util.ArrayList;
-
-public abstract class gracee_task_list{
+public abstract class graceeTaskList {
     protected String description;
     protected boolean isDone;
 
-    public gracee_task_list(String description) {
+    public graceeTaskList(String description) {
         this.description = description;
         this.isDone = false;
     }

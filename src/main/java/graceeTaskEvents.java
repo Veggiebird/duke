@@ -1,8 +1,8 @@
-public class gracee_task_events extends gracee_task_list {
+public class graceeTaskEvents extends graceeTaskList {
     private String from;
     private String to;
 
-    public gracee_task_events(String description, String from, String to){
+    public graceeTaskEvents(String description, String from, String to){
         super(description);
         this.from = from;
         this.to = to;

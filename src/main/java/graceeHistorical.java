@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class gracee_historical{
+public class graceeHistorical {
     private final ArrayList<String> items = new ArrayList<>(0);
 
     public void add(String entry){
