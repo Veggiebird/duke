@@ -22,8 +22,8 @@ public class graceeStorage {
         }
     }
 
-    public List<graceeTaskList> load(){
-        List<graceeTaskList> out = new ArrayList<>();
+    public List<graceeTaskDetails> load(){
+        List<graceeTaskDetails> out = new ArrayList<>();
 
         try{
             if(!Files.exists(dataFile)){
@@ -35,7 +35,7 @@ public class graceeStorage {
             for(String line : lines){
 
                 try {
-                    graceeTaskList task = parseLine(line);
+                    graceeTaskDetails task = parseLine(line);
                     if (task != null) {
                         out.add(task);
                     }
@@ -50,12 +50,12 @@ public class graceeStorage {
         return out;
         }
 
-    public void save(List<graceeTaskList> tasks){
+    public void save(List<graceeTaskDetails> tasks){
         try{
             checkParentDir();
             List<String> lines = new ArrayList<>();
 
-            for(graceeTaskList task : tasks){
+            for(graceeTaskDetails task : tasks){
                 lines.add(task.toString());
             }
             Files.write(
@@ -71,7 +71,7 @@ public class graceeStorage {
         }
     }
 
-    private graceeTaskList parseLine(String line){
+    private graceeTaskDetails parseLine(String line){
         String []  parts = line.split("\\s*\\|\\s*");
         if(parts.length != 3){
             throw new IllegalArgumentException("ERROR! Bad format.");
@@ -91,7 +91,7 @@ public class graceeStorage {
             throw new IllegalArgumentException("ERROR! Done token must be 1 (Done) or 0 (Pending)");
         }
 
-        graceeTaskList t;
+        graceeTaskDetails t;
         switch(type){
             case "Todo": {
                 t = new graceeTaskTodo(desc);

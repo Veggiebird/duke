@@ -1,49 +1,49 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class graceeTask {
-    private final ArrayList<graceeTaskList> taskList;
+public class graceeTaskMenu {
+    private final graceeTaskManager taskList;
     private final Scanner sc;
-    private final graceeStorage storage;
+    private graceeUi ui;
 
-    public graceeTask(ArrayList<graceeTaskList> taskList, Scanner sc, graceeStorage storage) {
+    public graceeTaskMenu(graceeTaskManager taskList, Scanner sc) {
         this.taskList = taskList;
         this.sc = sc;
-        this.storage = storage;
     }
 
     public void printTaskMenu(){
         boolean taskChatLive = true;
 
         while(taskChatLive){
-            graceePrinter.printDividerLn();
-            graceePrinter.printSubMenuTask();
-            graceePrinter.printDividerLn();
+            ui.line();
+            ui.printSubMenuTask();
+            ui.line();
 
             String taskInput = sc.nextLine();
 
-            switch (taskInput){
-                case "1":
+            switch (graceeParser.parseSubTask(taskInput)){
+                case ADD:
                     addTask();
                     break;
 
-                case "2":
+                case UPDATE:
                     updateTask();
                     break;
 
-                case "3":
+                case LIST:
                     listTask();
                     break;
 
-                case "4":
+                case REMOVE:
                     removeTask();
                     break;
 
-                case "5":
+                case BACK:
                     System.out.println("Back to Main Menu.");
                     taskChatLive = false;
                     break;
 
+                case INVALID:
                 default:
                     System.out.println("Invalid input. Please enter 1-5.");
             }
@@ -52,26 +52,26 @@ public class graceeTask {
     }
 
     private void addTask(){
-        graceeTaskList newTask = null;
+        graceeTaskDetails newTask = null;
 
         System.out.println("Please enter task type: todo / deadline / event");
         String taskType = sc.nextLine().toLowerCase();
 
         System.out.println("Please enter task description.");
-        String task_description = sc.nextLine();
+        String taskDescription = sc.nextLine();
 
         if(taskType.contains("todo")){
-            newTask = new graceeTaskTodo(task_description);
+            newTask = new graceeTaskTodo(taskDescription);
         }else if(taskType.contains("deadline")){
             System.out.println("Please enter deadline");
             String by = sc.nextLine();
-            newTask = new graceeTaskDeadline(task_description,by);
+            newTask = new graceeTaskDeadline(taskDescription,by);
         }else if(taskType.contains("event")){
             System.out.println("Please enter event start date");
             String from = sc.nextLine();
             System.out.println("Please enter event end date");
             String to = sc.nextLine();
-            newTask = new graceeTaskEvents(task_description, from, to);
+            newTask = new graceeTaskEvents(taskDescription, from, to);
         }else{
             System.out.println("Invalid task type");
             addTask();
@@ -80,12 +80,11 @@ public class graceeTask {
 
         taskList.add(newTask);
         System.out.println("Added task: " + newTask);
-        storage.save(taskList);
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
     private void updateTask(){
-        if(taskList.isEmpty()){
+        if(taskList.size() == 0){
             System.out.println("No task available.");
         }
 
@@ -102,13 +101,12 @@ public class graceeTask {
             System.out.println((task_number)+ ": " + taskList.get(index));
             if(taskList.get(index).getStatus().equals("1")){
                 taskList.get(index).markAsPending();
-                System.out.println((task_number)+": " + taskList.get(index) + " has been marked as Pending.");
+                System.out.println((task_number)+": " + taskList.get(index) + " has been marked as 0 (Pending).");
             }
             else if(taskList.get(index).getStatus().equals("0")){
                 taskList.get(index).markAsDone();
-                System.out.println((task_number)+": " + taskList.get(index) + " has been marked as Done.");
+                System.out.println((task_number)+": " + taskList.get(index) + " has been marked as 1 (Done).");
             }
-            storage.save(taskList);
         } catch (NumberFormatException e) {
             System.out.println("You did not enter a number. Please enter number and not other characters.");
         } catch (IndexOutOfBoundsException e) {
@@ -118,7 +116,7 @@ public class graceeTask {
 
     private void listTask(){
 
-        if (taskList.isEmpty()) {
+        if (taskList.size() == 0) {
             System.out.println("No task available.");
             return;
         }
@@ -130,7 +128,7 @@ public class graceeTask {
     }
 
     private void removeTask(){
-        if(taskList.isEmpty()){
+        if(taskList.size() == 0){
             System.out.println("No task available.");
             return;
         }
@@ -142,15 +140,12 @@ public class graceeTask {
         System.out.println("Please enter task number that you would like to remove.");
 
         try{
-            int rm_task_number = Integer.parseInt(sc.nextLine());
-            int rm_index = rm_task_number - 1;
+            int rmTaskNumber = Integer.parseInt(sc.nextLine());
+            int rmIndex = rmTaskNumber - 1;
 
-            System.out.println((rm_task_number)+": " + taskList.get(rm_index) + " is removed.");
-            taskList.remove(rm_index);
+            System.out.println((rmTaskNumber)+": " + taskList.get(rmIndex) + " is removed.");
+            taskList.remove(rmIndex);
             System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-
-            storage.save(taskList);
-
         } catch (NumberFormatException e) {
             System.out.println("You did not enter a number. Please enter number and not other characters.");
         } catch (IndexOutOfBoundsException e) {

@@ -1,4 +1,4 @@
-public class graceeTaskEvents extends graceeTaskList {
+public class graceeTaskEvents extends graceeTaskDetails {
     private String from;
     private String to;
 

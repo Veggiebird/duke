@@ -1,4 +1,4 @@
-public class graceeTaskTodo extends graceeTaskList {
+public class graceeTaskTodo extends graceeTaskDetails {
 
     public graceeTaskTodo(String description){
         super(description);

@@ -1,10 +1,18 @@
-public class graceePrinter {
+import java.util.Scanner;
 
-    public static void printDividerLn(){
+public class graceeUi {
+
+    private final Scanner sc;
+
+    public graceeUi(Scanner sc){
+        this.sc = sc;
+    }
+
+    public void line(){
         System.out.println("___________________________");
     }
 
-    public static void printMainMenu(){
+    public void printMainMenu(){
         System.out.println("Hello! I am Gracee! This is a gold shop.");
         System.out.println("What can I do for you?");
         System.out.println("Common FAQ: \n1. Shop business hour and details.");
@@ -15,13 +23,13 @@ public class graceePrinter {
         System.out.println("Please enter 1, 2, 3, 4 or bye to proceed further.");
     }
 
-    public static void printMainMenuShopDetails(){
+    public void printMainMenuShopDetails(){
         System.out.println("Opening time: 10:00 AM - 17:00 PM.");
         System.out.println("Address: 123 Blk Rich, S888999");
         System.out.println("Phone:+65 888999888");
     }
 
-    public static void printSubMenuTask(){
+    public void printSubMenuTask(){
         System.out.println("Task menu: ");
         System.out.println("1. Add task.");
         System.out.println("2. Update task (Update to Done or Pending)");

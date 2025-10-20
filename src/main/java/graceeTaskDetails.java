@@ -1,8 +1,8 @@
-public abstract class graceeTaskList {
+public abstract class graceeTaskDetails {
     protected String description;
     protected boolean isDone;
 
-    public graceeTaskList(String description) {
+    public graceeTaskDetails(String description) {
         this.description = description;
         this.isDone = false;
     }
