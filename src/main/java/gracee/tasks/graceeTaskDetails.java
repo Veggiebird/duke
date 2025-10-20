@@ -1,3 +1,5 @@
+package gracee.tasks;
+
 public abstract class graceeTaskDetails {
     protected String description;
     protected boolean isDone;

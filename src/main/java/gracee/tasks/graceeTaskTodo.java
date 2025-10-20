@@ -1,3 +1,5 @@
+package gracee.tasks;
+
 public class graceeTaskTodo extends graceeTaskDetails {
 
     public graceeTaskTodo(String description){

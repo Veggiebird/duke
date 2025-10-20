@@ -1,3 +1,4 @@
+package gracee.ui;
 import java.util.Scanner;
 
 public class graceeUi {

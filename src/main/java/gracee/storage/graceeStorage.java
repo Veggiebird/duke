@@ -1,3 +1,11 @@
+package gracee.storage;
+
+import gracee.tasks.graceeTaskDetails;
+import gracee.tasks.graceeTaskTodo;
+import gracee.tasks.graceeTaskEvents;
+import gracee.tasks.graceeTaskDeadline;
+
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
