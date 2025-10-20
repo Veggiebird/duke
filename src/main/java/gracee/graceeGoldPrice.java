@@ -1,5 +1,9 @@
+package gracee;
+import gracee.ui.graceeUi;
+
 public class graceeGoldPrice {
 
+    graceeUi ui;
     // Change gold price daily here
 
     //Shop buy, customer sell
@@ -31,21 +35,21 @@ public class graceeGoldPrice {
                     System.out.println("We sell: \n999: " + sell999);
                     System.out.println("916: " + sell916);
                     System.out.println("750: Item sell by piece and not gold rate.");
-                    graceePrinter.printDividerLn();
+                    ui.line();
                     break;
 
                 case SELL: //Shop buy, customer sell
                     System.out.println("We buy: \n999: " + buy999);
                     System.out.println("916: " + buy916);
                     System.out.println("750: " + buy750);
-                    graceePrinter.printDividerLn();
+                    ui.line();
                     break;
 
                 case TRADEIN: //Customer trade in for other item
                     System.out.println("Trade in price: \n999: " + tradeIn999);
                     System.out.println("916: " + tradeIn916);
                     System.out.println("750: " + tradeIn750);
-                    graceePrinter.printDividerLn();
+                    ui.line();
                     break;
             }
         } catch (IllegalArgumentException e){

@@ -1,3 +1,6 @@
+package gracee.tasks;
+
+
 public class graceeTaskDeadline extends graceeTaskDetails {
 
     private String by;

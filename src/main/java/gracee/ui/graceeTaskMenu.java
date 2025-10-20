@@ -1,4 +1,10 @@
-import java.util.ArrayList;
+package gracee.ui;
+import gracee.tasks.graceeTaskManager;
+import gracee.tasks.graceeTaskDetails;
+import gracee.tasks.graceeTaskTodo;
+import gracee.tasks.graceeTaskEvents;
+import gracee.tasks.graceeTaskDeadline;
+import gracee.parser.graceeParser;
 import java.util.Scanner;
 
 public class graceeTaskMenu {

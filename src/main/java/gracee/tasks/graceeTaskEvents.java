@@ -1,3 +1,5 @@
+package gracee.tasks;
+
 public class graceeTaskEvents extends graceeTaskDetails {
     private String from;
     private String to;

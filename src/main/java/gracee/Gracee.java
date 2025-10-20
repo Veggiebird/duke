@@ -1,3 +1,12 @@
+package gracee;
+import gracee.ui.graceeUi;
+import gracee.ui.graceeTaskMenu;
+import gracee.parser.graceeParser;
+import gracee.storage.graceeStorage;
+import gracee.tasks.graceeTaskManager;
+import gracee.graceeGoldPrice;
+import gracee.graceeHistorical;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
