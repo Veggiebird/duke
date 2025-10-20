@@ -9,6 +9,6 @@ public class graceeTaskDeadline extends graceeTaskList {
 
     @Override
     public String toString(){
-        return "[Deadline] [" + getStatus() + "]" + description + " by " + by + "}";
+        return "Deadline | " + getStatus() + " | " + description + " | by " + by + "}";
     }
 }

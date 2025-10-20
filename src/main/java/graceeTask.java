@@ -2,12 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class graceeTask {
-    private ArrayList<graceeTaskList> taskList;
-    private Scanner sc;
+    private final ArrayList<graceeTaskList> taskList;
+    private final Scanner sc;
+    private final graceeStorage storage;
 
-    public graceeTask(ArrayList<graceeTaskList> taskList, Scanner sc){
+    public graceeTask(ArrayList<graceeTaskList> taskList, Scanner sc, graceeStorage storage) {
         this.taskList = taskList;
         this.sc = sc;
+        this.storage = storage;
     }
 
     public void printTaskMenu(){
@@ -72,10 +74,13 @@ public class graceeTask {
             newTask = new graceeTaskEvents(task_description, from, to);
         }else{
             System.out.println("Invalid task type");
+            addTask();
+            return;
         }
 
         taskList.add(newTask);
         System.out.println("Added task: " + newTask);
+        storage.save(taskList);
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
@@ -95,14 +100,15 @@ public class graceeTask {
             int index = task_number - 1;
 
             System.out.println((task_number)+ ": " + taskList.get(index));
-            if(taskList.get(index).getStatus().equals("Done")){
+            if(taskList.get(index).getStatus().equals("1")){
                 taskList.get(index).markAsPending();
                 System.out.println((task_number)+": " + taskList.get(index) + " has been marked as Pending.");
             }
-            else if(taskList.get(index).getStatus().equals("Pending")){
+            else if(taskList.get(index).getStatus().equals("0")){
                 taskList.get(index).markAsDone();
                 System.out.println((task_number)+": " + taskList.get(index) + " has been marked as Done.");
             }
+            storage.save(taskList);
         } catch (NumberFormatException e) {
             System.out.println("You did not enter a number. Please enter number and not other characters.");
         } catch (IndexOutOfBoundsException e) {
@@ -111,6 +117,12 @@ public class graceeTask {
     }
 
     private void listTask(){
+
+        if (taskList.isEmpty()) {
+            System.out.println("No task available.");
+            return;
+        }
+
         System.out.println("Task list as below");
         for(int i = 0; i < taskList.size(); i++){
             System.out.println((i+1)+": " + taskList.get(i));
@@ -136,6 +148,8 @@ public class graceeTask {
             System.out.println((rm_task_number)+": " + taskList.get(rm_index) + " is removed.");
             taskList.remove(rm_index);
             System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+
+            storage.save(taskList);
 
         } catch (NumberFormatException e) {
             System.out.println("You did not enter a number. Please enter number and not other characters.");

@@ -6,8 +6,11 @@ public class Gracee {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+        graceeStorage storage = new graceeStorage();
+        ArrayList<graceeTaskList> taskList = new ArrayList<>(storage.load());
+
         graceeHistorical historical = new graceeHistorical();
-        List<graceeTaskList> taskList = new ArrayList<>();
+       // List<graceeTaskList> taskList = new ArrayList<>();
 
         graceePrinter.printDividerLn();
         graceePrinter.printMainMenu(); // Print main menu
@@ -49,7 +52,7 @@ public class Gracee {
                 case "4": // Main menu: Check your task list.
                     graceePrinter.printDividerLn();
                     System.out.println("You are in task list interface.");
-                    graceeTask taskMenu = new graceeTask((ArrayList<graceeTaskList>) taskList, sc);
+                    graceeTask taskMenu = new graceeTask((ArrayList<graceeTaskList>) taskList, sc, storage);
                     taskMenu.printTaskMenu();
                     break;
 

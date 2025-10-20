@@ -8,7 +8,7 @@ public abstract class graceeTaskList {
     }
 
     public String getStatus() {
-        return (isDone ? "Done" : "Pending");
+        return (isDone ? "1" : "0");
     }
 
     public void markAsDone(){

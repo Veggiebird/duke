@@ -10,6 +10,6 @@ public class graceeTaskEvents extends graceeTaskList {
 
     @Override
     public String toString(){
-        return "[Events][" + getStatus() + "]" + description;
+        return "Events | " + getStatus() + " | " + description + " | " + from + " to " + to;
     }
 }

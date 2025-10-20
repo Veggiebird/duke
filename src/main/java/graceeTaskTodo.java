@@ -6,6 +6,6 @@ public class graceeTaskTodo extends graceeTaskList {
 
     @Override
     public String toString(){
-        return "[Todo][" + getStatus() + "]" + description;
+        return "Todo | " + getStatus() + "|" + description;
     }
 }
