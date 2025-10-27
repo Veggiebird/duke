@@ -6,11 +6,22 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Handle events with start and end time
+ */
+
 public class graceeTaskEvents extends graceeTaskDetails {
     private final LocalDateTime fromDT;
     private final LocalDateTime toDT;
 
-
+    /**
+     * Create new event task with date and time
+     * @param description
+     * @param fromDate
+     * @param fromTime
+     * @param toDate
+     * @param toTime
+     */
     public graceeTaskEvents(String description, String fromDate, String fromTime, String toDate, String toTime) {
         super(description);
 
@@ -40,7 +51,10 @@ public class graceeTaskEvents extends graceeTaskDetails {
     }
 
 
-
+    /**
+     * Display string for events with start and end datetime.
+     * @return
+     */
     @Override
     public String toString(){
 

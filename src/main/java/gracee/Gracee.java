@@ -7,8 +7,20 @@ import gracee.tasks.graceeTaskManager;
 
 import java.util.Scanner;
 
+/**
+ * Entry for Gracee chatbot application.
+ *
+ * Gracee is a simple command line assistant for Gracee gold shop employee to manage their task provide shop details.
+ * It has main menu to view shop info, check daily gold price, review historical activity and manage task list like todo, deadline and events.
+ *
+ */
+
 
 public class Gracee {
+    /**
+     * Main method that starts the chatbot
+     * @param args
+     */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);

@@ -7,6 +7,10 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/**
+ * To capture different user input date and time format type and parse into a standard date time format
+ */
+
 public class graceeDateTime {
   private graceeDateTime(){}
 
@@ -27,6 +31,11 @@ public class graceeDateTime {
             new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("ha").toFormatter(EN)
     };
 
+    /**
+     * Parse date
+     * @param text
+     * @return
+     */
     public static LocalDate parseDateFlexible(String text) {
         if(text == null || text.trim().isEmpty()){
             throw new IllegalArgumentException("Date cannot be empty");
@@ -42,9 +51,15 @@ public class graceeDateTime {
         throw new IllegalArgumentException("Invalid format. Please try '11 Oct 2025' or '11102025' ");
     }
 
-public static LocalTime parseTimeFlexible(String text) {
-    if(text == null || text.trim().isEmpty()){
-        throw new IllegalArgumentException("Time cannot be empty");
+     /**
+     * Parse time
+     * @param text
+     * @return
+     */
+
+    public static LocalTime parseTimeFlexible(String text) {
+        if(text == null || text.trim().isEmpty()){
+            throw new IllegalArgumentException("Time cannot be empty");
     }
 
     String s = text.trim().replaceAll("\\s+","");

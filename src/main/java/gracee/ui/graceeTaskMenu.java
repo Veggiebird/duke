@@ -6,20 +6,34 @@ import gracee.tasks.graceeTaskEvents;
 import gracee.tasks.graceeTaskDeadline;
 import gracee.parser.graceeParser;
 import gracee.graceeDateTime;
-
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+/**
+ * Handle user interaction for task management.
+ *
+ * Provides option to add, update, list and remove tasks for task types such as todo / deadline / events.
+ */
 
 public class graceeTaskMenu {
     private final graceeTaskManager taskList;
     private final Scanner sc;
     private graceeUi ui;
 
+    /**
+     * Create new task menu handler
+     * @param taskList
+     * @param sc
+     * @param ui
+     */
     public graceeTaskMenu(graceeTaskManager taskList, Scanner sc, graceeUi ui) {
         this.taskList = taskList;
         this.sc = sc;
         this.ui = ui;
     }
+
+    /**
+     * Display main task menu
+     */
 
     public void printTaskMenu(){
         boolean taskChatLive = true;
@@ -60,6 +74,13 @@ public class graceeTaskMenu {
         }
     }
 
+    /**
+     * Ask user to enter date and check if it's valid.
+     * If date is invalid and it will ask user to enter again.
+     * @param msg
+     * @return
+     */
+
     private String checkDate(String msg){
         while(true){
             System.out.println(msg);
@@ -73,6 +94,13 @@ public class graceeTaskMenu {
         }
     }
 
+    /**
+     * Ask user to enter time and check if it's valid.
+     * If date is invalid and it will ask user to enter again.
+     * @param msg
+     * @return
+     */
+
     private String checkTime(String msg){
         while(true){
             System.out.println(msg);
@@ -85,6 +113,10 @@ public class graceeTaskMenu {
             }
         }
     }
+
+    /**
+     * Add task based on user input
+     */
 
     private void addTask(){
         graceeTaskDetails newTask = null;
@@ -119,6 +151,10 @@ public class graceeTaskMenu {
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
+    /**
+     * Update task based on user input, either set the task status to done or pending.
+     */
+
     private void updateTask(){
         if(taskList.size() == 0){
             System.out.println("No task available.");
@@ -150,6 +186,10 @@ public class graceeTaskMenu {
         }
     }
 
+    /**
+     * List all tasks
+     */
+
     private void listTask(){
 
         if (taskList.size() == 0) {
@@ -162,6 +202,10 @@ public class graceeTaskMenu {
             System.out.println((i+1)+": " + taskList.get(i));
         }
     }
+
+    /**
+     * Remove selected task
+     */
 
     private void removeTask(){
         if(taskList.size() == 0){

@@ -6,11 +6,20 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Handles deadline task
+ */
+
 public class graceeTaskDeadline extends graceeTaskDetails {
 
     private final LocalDateTime deadline;
 
-
+    /**
+     * Create new deadline task with date and time
+     * @param description
+     * @param byDate
+     * @param byTime
+     */
     public graceeTaskDeadline(String description, String byDate, String byTime) {
         super(description);
 
@@ -28,6 +37,11 @@ public class graceeTaskDeadline extends graceeTaskDetails {
     public LocalDateTime getDeadline() {
         return deadline;
     }
+
+    /**
+     * Return string for deadline task with description and datetime.
+     * @return
+     */
 
     @Override
     public String toString(){

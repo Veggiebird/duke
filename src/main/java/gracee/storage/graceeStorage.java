@@ -16,10 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Handle create of files to keep and update historical event and tasks.
+ * Each line represents a serialized task.
+ */
+
 public class graceeStorage {
 
     private final Path dataFile;
     private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 
     public graceeStorage() {
         this.dataFile = Paths.get("data", "gracee.txt");
@@ -32,6 +38,9 @@ public class graceeStorage {
         }
     }
 
+    /**
+     * Load task from file
+     */
     public List<graceeTaskDetails> load(){
         List<graceeTaskDetails> out = new ArrayList<>();
 
@@ -60,6 +69,10 @@ public class graceeStorage {
         return out;
         }
 
+    /**
+     * Save tasks to file
+      * @param tasks
+     */
     public void save(List<graceeTaskDetails> tasks){
         try{
             checkParentDir();
