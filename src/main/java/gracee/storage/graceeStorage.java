@@ -5,19 +5,21 @@ import gracee.tasks.graceeTaskTodo;
 import gracee.tasks.graceeTaskEvents;
 import gracee.tasks.graceeTaskDeadline;
 
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class graceeStorage {
 
     private final Path dataFile;
+    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public graceeStorage() {
         this.dataFile = Paths.get("data", "gracee.txt");
@@ -107,21 +109,19 @@ public class graceeStorage {
             }
 
             case "Deadline":{
-                String by = (parts.length >= 4 ) ? parts[3] : "";
+                LocalDateTime by = LocalDateTime.parse(parts[3].trim(), timeFormat);
                 t = new graceeTaskDeadline(desc, by);
                 break;
             }
 
             case "Event": {
-                String when = (parts.length >= 4) ? parts[3] : "";
-                String from = when, to = "";
-                if(when.contains(" to ")){
-                    String[] ft = when.split("\\s+to\\s+", 2);
-                    from = ft[0];
-                    to = ft.length > 1 ? ft[1] : "";
-                }
 
-                t = new graceeTaskEvents(desc,from, to);
+                if (parts.length < 5) {
+                    throw new IllegalArgumentException("ERROR! Event line missing start/end datetimes.");
+                }
+                LocalDateTime from = LocalDateTime.parse(parts[3].trim(), timeFormat);
+                LocalDateTime to   = LocalDateTime.parse(parts[4].trim(), timeFormat);
+                t = new graceeTaskEvents(desc, from, to); // uses the LocalDateTime overload
                 break;
             }
 

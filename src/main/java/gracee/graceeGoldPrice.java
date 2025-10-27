@@ -1,9 +1,12 @@
 package gracee;
 import gracee.ui.graceeUi;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class graceeGoldPrice {
 
-    graceeUi ui;
+    graceeUi ui = new graceeUi(new java.util.Scanner(System.in));
     // Change gold price daily here
 
     //Shop buy, customer sell
@@ -25,6 +28,10 @@ public class graceeGoldPrice {
     }
 
     public void showGoldPrice(String ask){
+
+        LocalDate currentDate = LocalDate.now();
+
+        System.out.println("Today is " + currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         System.out.println("Currency is SGD, price per gram.\n");
 
         try {

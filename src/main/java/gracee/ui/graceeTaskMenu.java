@@ -5,6 +5,9 @@ import gracee.tasks.graceeTaskTodo;
 import gracee.tasks.graceeTaskEvents;
 import gracee.tasks.graceeTaskDeadline;
 import gracee.parser.graceeParser;
+import gracee.graceeDateTime;
+
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class graceeTaskMenu {
@@ -12,9 +15,10 @@ public class graceeTaskMenu {
     private final Scanner sc;
     private graceeUi ui;
 
-    public graceeTaskMenu(graceeTaskManager taskList, Scanner sc) {
+    public graceeTaskMenu(graceeTaskManager taskList, Scanner sc, graceeUi ui) {
         this.taskList = taskList;
         this.sc = sc;
+        this.ui = ui;
     }
 
     public void printTaskMenu(){
@@ -54,7 +58,32 @@ public class graceeTaskMenu {
                     System.out.println("Invalid input. Please enter 1-5.");
             }
         }
+    }
 
+    private String checkDate(String msg){
+        while(true){
+            System.out.println(msg);
+            String input = sc.nextLine();
+            try{
+                graceeDateTime.parseDateFlexible(input);
+                return input;
+            } catch (IllegalArgumentException e){
+                System.out.println("Invalid date format. Please enter valid date such as 111025, 11 oct 2025");
+            }
+        }
+    }
+
+    private String checkTime(String msg){
+        while(true){
+            System.out.println(msg);
+            String input = sc.nextLine();
+            try{
+                graceeDateTime.parseTimeFlexible(input);
+                return input;
+            } catch (IllegalArgumentException e){
+                System.out.println("Invalid time format. Please enter valid date such as 1800, 18:00");
+            }
+        }
     }
 
     private void addTask(){
@@ -70,14 +99,15 @@ public class graceeTaskMenu {
             newTask = new graceeTaskTodo(taskDescription);
         }else if(taskType.contains("deadline")){
             System.out.println("Please enter deadline");
-            String by = sc.nextLine();
-            newTask = new graceeTaskDeadline(taskDescription,by);
+            String byDate = checkDate("Please enter date in ddMMyyy format, example 11102025");
+            String byTime = checkTime("Please enter time in HHmm format, example 1800");
+            newTask = new graceeTaskDeadline(taskDescription,byDate, byTime);
         }else if(taskType.contains("event")){
-            System.out.println("Please enter event start date");
-            String from = sc.nextLine();
-            System.out.println("Please enter event end date");
-            String to = sc.nextLine();
-            newTask = new graceeTaskEvents(taskDescription, from, to);
+            String fromDate = checkDate("Please enter date in ddMMyyy format, example 11102025");
+            String fromTime = checkTime("Please enter time in HHmm format, example 1800");
+            String toDate = checkDate("Please enter date in ddMMyyy format, example 11102025");
+            String toTime = checkTime("Please enter time in HHmm format, example 1800");
+            newTask = new graceeTaskEvents(taskDescription, fromDate, fromTime, toDate, toTime);
         }else{
             System.out.println("Invalid task type");
             addTask();

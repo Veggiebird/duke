@@ -4,11 +4,9 @@ import gracee.ui.graceeTaskMenu;
 import gracee.parser.graceeParser;
 import gracee.storage.graceeStorage;
 import gracee.tasks.graceeTaskManager;
-import gracee.graceeGoldPrice;
-import gracee.graceeHistorical;
 
 import java.util.Scanner;
-import java.util.ArrayList;
+
 
 public class Gracee {
     public static void main(String[] args) {
@@ -37,16 +35,16 @@ public class Gracee {
                     ui.printMainMenuShopDetails();
                     ui.line();
 
-                    historical.add("Asked shop details.");
+                    historical.add("Check shop details.");
                     break;
 
                 case PRICE: // Main menu: 2. Buying/Selling price of gold.
                     ui.line();
-                    System.out.println("Thanks for checking gold price with us.\nPlease enter if you want to check price for BUY, SELL or TRADEIN");
+                    System.out.println("Please enter if you want to check price for BUY, SELL or TRADEIN");
                     String goldInput = sc.nextLine();
                     graceeGoldPrice checker = new graceeGoldPrice();
                     checker.showGoldPrice(goldInput);
-                    historical.add("Asked gold price.");
+                    historical.add("Checked gold price.");
                     break;
 
                 case HISTORY: // Main menu: 3. List historical conversation.
@@ -61,7 +59,7 @@ public class Gracee {
                 case TASKS: // Main menu: Check your task list.
                     ui.line();
                     System.out.println("You are in task list interface.");
-                    new graceeTaskMenu(taskManager,sc).printTaskMenu();
+                    new graceeTaskMenu(taskManager,sc, ui).printTaskMenu();
                     break;
 
 // ==================================== END mini TASK MENU ===========================================
