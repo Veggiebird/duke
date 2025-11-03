@@ -66,6 +66,8 @@ public class graceeUi {
         System.out.println("2. Update task (Update to Done or Pending)");
         System.out.println("3. List tasks.");
         System.out.println("4. Remove tasks.");
-        System.out.println("5. Exit task list interface.");
+        System.out.println("5. Search task based on date ddMMyyyy.");
+        System.out.println("6. Search task based on keyword");
+        System.out.println("7. Exit task list interface.");
     }
 }

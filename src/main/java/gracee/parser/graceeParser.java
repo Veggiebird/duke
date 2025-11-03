@@ -33,6 +33,8 @@ public class graceeParser {
         UPDATE,
         LIST,
         REMOVE,
+        SEARCH,
+        KEYWORD,
         BACK,
         INVALID
     }
@@ -48,6 +50,10 @@ public class graceeParser {
             case "4" :
                 return subTaskCmd.REMOVE;
             case "5" :
+                return subTaskCmd.SEARCH;
+            case "6" :
+                return subTaskCmd.KEYWORD;
+            case "7" :
                 return subTaskCmd.BACK;
             default:
                 return subTaskCmd.INVALID;

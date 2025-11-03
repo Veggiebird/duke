@@ -11,7 +11,9 @@ import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +26,8 @@ import java.time.format.DateTimeFormatter;
 public class graceeStorage {
 
     private final Path dataFile;
-    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
     public graceeStorage() {
         this.dataFile = Paths.get("data", "gracee.txt");
@@ -96,7 +98,7 @@ public class graceeStorage {
 
     private graceeTaskDetails parseLine(String line){
         String []  parts = line.split("\\s*\\|\\s*");
-        if(parts.length != 3){
+        if(parts.length < 3){
             throw new IllegalArgumentException("ERROR! Bad format.");
         }
 
@@ -122,19 +124,28 @@ public class graceeStorage {
             }
 
             case "Deadline":{
-                LocalDateTime by = LocalDateTime.parse(parts[3].trim(), timeFormat);
-                t = new graceeTaskDeadline(desc, by);
+
+                if (parts.length < 5) {
+                    throw new IllegalArgumentException("ERROR! Deadline line missing start/end datetime.");
+                }
+
+                LocalDate byDate = LocalDate.parse(parts[3].trim(), dateFormat);
+                LocalTime byTime = LocalTime.parse(parts[4].trim(), timeFormat);
+                t = new graceeTaskDeadline(desc, byDate, byTime);
                 break;
             }
 
             case "Event": {
 
-                if (parts.length < 5) {
-                    throw new IllegalArgumentException("ERROR! Event line missing start/end datetimes.");
+                if (parts.length < 7) {
+                    throw new IllegalArgumentException("ERROR! Event line missing start/end datetime.");
                 }
-                LocalDateTime from = LocalDateTime.parse(parts[3].trim(), timeFormat);
-                LocalDateTime to   = LocalDateTime.parse(parts[4].trim(), timeFormat);
-                t = new graceeTaskEvents(desc, from, to); // uses the LocalDateTime overload
+                LocalDate fromDate = LocalDate.parse(parts[3].trim(), dateFormat);
+                LocalTime fromTime   = LocalTime.parse(parts[4].trim(), timeFormat);
+
+                LocalDate toDate = LocalDate.parse(parts[5].trim(), dateFormat);
+                LocalTime toTime   = LocalTime.parse(parts[6].trim(), timeFormat);
+                t = new graceeTaskEvents(desc, fromDate, fromTime, toDate, toTime); // uses the LocalDateTime overload
                 break;
             }
 

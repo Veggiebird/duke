@@ -21,6 +21,6 @@ public class graceeTaskTodo extends graceeTaskDetails {
 
     @Override
     public String toString(){
-        return "Todo | " + getStatus() + "|" + description;
+        return "Todo | " + getStatus() + " | " + description;
     }
 }

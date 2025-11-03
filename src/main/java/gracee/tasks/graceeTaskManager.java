@@ -14,10 +14,12 @@ public class graceeTaskManager {
     }
 
     public int size(){
+
         return tasks.size();
     }
 
     public graceeTaskDetails get(int index){
+
         return tasks.get(index);
     }
 

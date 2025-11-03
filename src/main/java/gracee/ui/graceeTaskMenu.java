@@ -6,6 +6,11 @@ import gracee.tasks.graceeTaskEvents;
 import gracee.tasks.graceeTaskDeadline;
 import gracee.parser.graceeParser;
 import gracee.graceeDateTime;
+import gracee.tasks.graceeSearch;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,6 +23,7 @@ public class graceeTaskMenu {
     private final graceeTaskManager taskList;
     private final Scanner sc;
     private graceeUi ui;
+    private final graceeSearch search;
 
     /**
      * Create new task menu handler
@@ -29,6 +35,7 @@ public class graceeTaskMenu {
         this.taskList = taskList;
         this.sc = sc;
         this.ui = ui;
+        this.search = new graceeSearch();
     }
 
     /**
@@ -60,6 +67,14 @@ public class graceeTaskMenu {
 
                 case REMOVE:
                     removeTask();
+                    break;
+
+                case SEARCH:
+                    searchTask();
+                    break;
+
+                case KEYWORD:
+                    searchKeyword();
                     break;
 
                 case BACK:
@@ -231,6 +246,93 @@ public class graceeTaskMenu {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("The task number is invalid, please enter valid task number between 1 - " + taskList.size());
         }
+    }
+
+    private void searchTask(){
+
+        if(taskList.size() == 0){
+            System.out.println("No task exist.");
+        }
+
+        System.out.println("Select search by \n1. Single Date \n2. Date Range.\nPlease enter 1 or 2.");
+
+        String selectSearchType = sc.nextLine().trim();
+
+        if(selectSearchType.equals("1")){
+
+            System.out.println("Please enter the task date that you would like to search.");
+
+            String dateInput = sc.nextLine();
+
+            LocalDate searchDate = graceeDateTime.parseDateFlexible(dateInput);
+            List<graceeTaskDetails> searchDateOutput = search.searchDate(searchDate);
+
+            if(searchDateOutput.isEmpty()){
+                System.out.println("No task found for date " + searchDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            } else{
+                System.out.println("Task List matching date as per below: \n");
+
+                for(int i = 0; i < searchDateOutput.size(); i++){
+                    System.out.println((i+1)+": " + searchDateOutput.get(i) + "\n");
+                }
+            }
+        } else if(selectSearchType.equals("2")){
+
+            System.out.println("Please enter the task date range that you would like to search.");
+
+            String dateRangeInputFrom = sc.nextLine();
+            String dateRangeInputTo = sc.nextLine();
+
+            LocalDate searchDateRangeFrom = graceeDateTime.parseDateFlexible(dateRangeInputFrom);
+            LocalDate searchDateRangeTo = graceeDateTime.parseDateFlexible(dateRangeInputTo);
+            List<graceeTaskDetails> searchDateRangeOutput = search.searchDateRange(searchDateRangeFrom, searchDateRangeTo);
+
+            if(searchDateRangeTo.isBefore(searchDateRangeFrom)){
+                System.out.println("End date cannot be before start date.");
+                return;
+            }
+
+            if(searchDateRangeOutput.isEmpty()){
+                System.out.println("No task found for date between " + searchDateRangeFrom.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " to " + searchDateRangeTo.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            } else{
+                System.out.println("Task List matching date range as per below: \n");
+
+                for(int i = 0; i < searchDateRangeOutput.size(); i++){
+                    System.out.println((i+1)+": " + searchDateRangeOutput.get(i) + "\n");
+                }
+            }
+
+        }
+    }
+
+    private void searchKeyword(){
+
+        if(taskList.size() == 0){
+            System.out.println("No task exist.");
+            return;
+        }
+
+        System.out.println("Please enter the keyword that you would like to search in task list");
+
+        String searchKey = sc.nextLine();
+
+        if(searchKey.isEmpty()){
+            System.out.println("Keyword cannot be empty.");
+            return;
+        }
+
+        List<graceeTaskDetails> keywordOutput = search.searchKeyword(searchKey);
+
+        if(keywordOutput.isEmpty()){
+            System.out.println("No task found for keyword " + searchKey);
+        } else{
+            System.out.println("Task List matching keyword as per below: \n");
+
+            for(int i = 0; i < keywordOutput.size(); i++){
+                System.out.println((i+1)+": " + keywordOutput.get(i) + "\n");
+            }
+        }
+
     }
 
 }

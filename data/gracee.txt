@@ -1,1 +1,3 @@
-Todo | 0|sleep
+Deadline | 0 | xxxx | 11/11/2026 | 09:00
+Event | 0 | yyyy | 01/01/2026 | 03:00 | 02/02/2026 | 03:00
+Todo | 0 | kkkkkk

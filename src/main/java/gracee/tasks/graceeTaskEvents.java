@@ -11,8 +11,11 @@ import java.time.format.DateTimeFormatter;
  */
 
 public class graceeTaskEvents extends graceeTaskDetails {
-    private final LocalDateTime fromDT;
-    private final LocalDateTime toDT;
+    private final LocalDate fromDate;
+    private final LocalTime fromTime;
+
+    private final LocalDate toDate;
+    private final LocalTime toTime;
 
     /**
      * Create new event task with date and time
@@ -25,31 +28,50 @@ public class graceeTaskEvents extends graceeTaskDetails {
     public graceeTaskEvents(String description, String fromDate, String fromTime, String toDate, String toTime) {
         super(description);
 
-        LocalDate ParseFromDate = graceeDateTime.parseDateFlexible(fromDate);
-        LocalTime ParseFromTime = graceeDateTime.parseTimeFlexible(fromTime);
+        LocalDate parseFromDate = graceeDateTime.parseDateFlexible(fromDate);
+        LocalTime parseFromTime = graceeDateTime.parseTimeFlexible(fromTime);
 
-        LocalDate ParseToDate = graceeDateTime.parseDateFlexible(toDate);
-        LocalTime ParseToTime = graceeDateTime.parseTimeFlexible(toTime);
+        LocalDate parseToDate = graceeDateTime.parseDateFlexible(toDate);
+        LocalTime parseToTime = graceeDateTime.parseTimeFlexible(toTime);
 
-        this.fromDT = LocalDateTime.of(ParseFromDate, ParseFromTime);
-        this.toDT = LocalDateTime.of(ParseToDate, ParseToTime);
+        this.fromDate = parseFromDate;
+        this.fromTime = parseFromTime;
+        this.toDate = parseToDate;
+        this.toTime = parseToTime;
 
-        if(toDT.isBefore(fromDT)) {
+        if(parseToDate.isBefore(parseFromDate) || (parseToDate.equals(parseFromDate) && parseToTime.isBefore(parseFromTime))) {
             throw new IllegalArgumentException("ERROR! End date time cannot be before Start date time.");
         }
     }
 
-    public graceeTaskEvents(String description, LocalDateTime from, LocalDateTime to) {
+    public graceeTaskEvents(String description, LocalDate fromDate, LocalTime fromTime,LocalDate toDate, LocalTime toTime) {
         super(description);
 
-        if(to.isBefore(from)) {
+        if(toDate.isBefore(fromDate) || (toDate.equals(fromDate) && toTime.isBefore(fromTime))) {
             throw new IllegalArgumentException("ERROR! End date time cannot be before Start date time.");
         }
 
-        this.fromDT = from;
-        this.toDT = to;
+        this.fromDate = fromDate;
+        this.fromTime = fromTime;
+        this.toDate = toDate;
+        this.toTime = toTime;
     }
 
+    public LocalDate getFromDate(){
+        return  fromDate;
+    }
+
+    public LocalTime getFromTime(){
+        return fromTime;
+    }
+
+    public LocalDate getToDate(){
+        return toDate;
+    }
+
+    public LocalTime getToTime(){
+        return toTime;
+    }
 
     /**
      * Display string for events with start and end datetime.
@@ -58,9 +80,13 @@ public class graceeTaskEvents extends graceeTaskDetails {
     @Override
     public String toString(){
 
-        DateTimeFormatter display = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter displayFromDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter displayFromTime = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter displayToDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter displayToTime = DateTimeFormatter.ofPattern("HH:mm");
 
-        return "Events | " + getStatus() + " | " + description + " | " + fromDT.format(display) + " to " + toDT.format(display);
+        return "Event" + " | " + getStatus() + " | " + description + " | " + fromDate.format(displayFromDate) + " | " + fromTime.format(displayFromTime) +
+                " | " + toDate.format(displayToDate) + " | " + toTime.format(displayToTime);
     }
 }
 

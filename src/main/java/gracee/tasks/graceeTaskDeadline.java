@@ -12,7 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 public class graceeTaskDeadline extends graceeTaskDetails {
 
-    private final LocalDateTime deadline;
+    private final LocalDate deadlineDate;
+    private final LocalTime deadlineTime;
 
     /**
      * Create new deadline task with date and time
@@ -26,16 +27,22 @@ public class graceeTaskDeadline extends graceeTaskDetails {
         LocalDate date = graceeDateTime.parseDateFlexible(byDate);
         LocalTime time = graceeDateTime.parseTimeFlexible(byTime);
 
-        this.deadline = LocalDateTime.of(date, time);
+        this.deadlineDate = date;
+        this.deadlineTime = time;
     }
 
-    public graceeTaskDeadline(String description, LocalDateTime deadline){
+    public graceeTaskDeadline(String description, LocalDate deadlineDate, LocalTime deadlineTime) {
         super(description);
-        this.deadline = deadline;
+        this.deadlineDate = deadlineDate;
+        this.deadlineTime = deadlineTime;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public LocalDate getDeadlineDate() {
+        return deadlineDate;
+    }
+
+    public LocalTime getDeadlineTime() {
+        return deadlineTime;
     }
 
     /**
@@ -45,7 +52,8 @@ public class graceeTaskDeadline extends graceeTaskDetails {
 
     @Override
     public String toString(){
-        DateTimeFormatter display = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return "Deadline | " + getStatus() + " | " + description + " | by " + deadline.format(display);
+        DateTimeFormatter displayDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter displayTime = DateTimeFormatter.ofPattern("HH:mm");
+        return "Deadline | " + getStatus() + " | " + description + " | " + deadlineDate.format(displayDate) + " | " + deadlineTime.format(displayTime);
     }
 }
