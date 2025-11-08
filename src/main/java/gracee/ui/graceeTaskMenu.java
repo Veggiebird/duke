@@ -324,7 +324,7 @@ public class graceeTaskMenu {
         List<graceeTaskDetails> keywordOutput = search.searchKeyword(searchKey);
 
         if(keywordOutput.isEmpty()){
-            System.out.println("No task found for keyword " + searchKey);
+            System.out.println("No task found for keyword '"+ searchKey + " '.");
         } else{
             System.out.println("Task List matching keyword as per below: \n");
 
