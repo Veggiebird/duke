@@ -15,7 +15,6 @@ import java.util.Scanner;
 
 /**
  * Handle user interaction for task management.
- *
  * Provides option to add, update, list and remove tasks for task types such as todo / deadline / events.
  */
 
@@ -43,9 +42,9 @@ public class graceeTaskMenu {
      */
 
     public void printTaskMenu(){
-        boolean taskChatLive = true;
+        boolean isTaskChatLive = true;
 
-        while(taskChatLive){
+        while(isTaskChatLive){
             ui.line();
             ui.printSubMenuTask();
             ui.line();
@@ -79,7 +78,8 @@ public class graceeTaskMenu {
 
                 case BACK:
                     System.out.println("Back to Main Menu.");
-                    taskChatLive = false;
+                    ui.printMainMenu();
+                    isTaskChatLive = false;
                     break;
 
                 case INVALID:
@@ -248,6 +248,10 @@ public class graceeTaskMenu {
         }
     }
 
+    /**
+     * Search task based on date or date range.
+     */
+
     private void searchTask(){
 
         if(taskList.size() == 0){
@@ -260,9 +264,19 @@ public class graceeTaskMenu {
 
         if(selectSearchType.equals("1")){
 
-            System.out.println("Please enter the task date that you would like to search.");
+            String dateInput;
 
-            String dateInput = sc.nextLine();
+            while (true) {
+                System.out.println("Please enter the task date that you would like to search.");
+                dateInput = sc.nextLine();
+
+                try {
+                    graceeDateTime.parseDateFlexible(dateInput);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Please re-enter a valid date, such as 11102026");
+                }
+            }
 
             LocalDate searchDate = graceeDateTime.parseDateFlexible(dateInput);
             List<graceeTaskDetails> searchDateOutput = search.searchDate(searchDate);
@@ -278,10 +292,32 @@ public class graceeTaskMenu {
             }
         } else if(selectSearchType.equals("2")){
 
-            System.out.println("Please enter the task date range that you would like to search.");
+            String dateRangeInputFrom;
+            String dateRangeInputTo;
 
-            String dateRangeInputFrom = sc.nextLine();
-            String dateRangeInputTo = sc.nextLine();
+            while (true) {
+                System.out.println("Please enter the task start date range that you would like to search.");
+                dateRangeInputFrom = sc.nextLine();
+
+                try {
+                    graceeDateTime.parseDateFlexible(dateRangeInputFrom);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Please re-enter a valid date, such as 11102026");
+                }
+            }
+
+            while (true) {
+                System.out.println("Please enter the task end date range that you would like to search.");
+                dateRangeInputTo = sc.nextLine();
+
+                try {
+                    graceeDateTime.parseDateFlexible(dateRangeInputTo);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Please re-enter a valid date, such as 11102026");
+                }
+            }
 
             LocalDate searchDateRangeFrom = graceeDateTime.parseDateFlexible(dateRangeInputFrom);
             LocalDate searchDateRangeTo = graceeDateTime.parseDateFlexible(dateRangeInputTo);
@@ -304,6 +340,10 @@ public class graceeTaskMenu {
 
         }
     }
+
+    /**
+     * Search keyword and return the matching task list
+     */
 
     private void searchKeyword(){
 

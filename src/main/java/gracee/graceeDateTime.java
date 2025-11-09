@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 
 public class graceeDateTime {
-  private graceeDateTime(){}
+    private graceeDateTime(){}
 
     private static final Locale EN = Locale.ENGLISH;
 
@@ -37,18 +37,31 @@ public class graceeDateTime {
      * @return
      */
     public static LocalDate parseDateFlexible(String text) {
-        if(text == null || text.trim().isEmpty()){
+
+        assert text != null : "Date cannot be empty";
+
+        if (text == null || text.trim().isEmpty()){
             throw new IllegalArgumentException("Date cannot be empty");
         }
 
         String s = text.trim();
-        for(DateTimeFormatter f : DATE_FORMATS){
+        for (DateTimeFormatter f : DATE_FORMATS){
             try{
-                return LocalDate.parse(s, f);
+
+                LocalDate parsed = LocalDate.parse(s, f);
+
+                if (!parsed.isAfter(LocalDate.now())){
+                    throw new IllegalArgumentException(
+                            "Date must be a future date! You've entered " + parsed
+                    );
+                }
+                return parsed;
             } catch (DateTimeParseException ignored){}
         }
 
-        throw new IllegalArgumentException("Invalid format. Please try '11 Oct 2025' or '11102025' ");
+        throw new IllegalArgumentException(
+                "Invalid format. Please try '11 Oct 2025' or '11102025'."
+        );
     }
 
      /**
@@ -56,19 +69,21 @@ public class graceeDateTime {
      * @param text
      * @return
      */
-
     public static LocalTime parseTimeFlexible(String text) {
-        if(text == null || text.trim().isEmpty()){
+
+        assert text != null : "Time cannot be empty";
+
+        if (text == null || text.trim().isEmpty()){
             throw new IllegalArgumentException("Time cannot be empty");
-    }
+        }
 
-    String s = text.trim().replaceAll("\\s+","");
-    for(DateTimeFormatter f : TIME_FORMATS){
-        try{
-            return LocalTime.parse(s, f);
-        } catch (DateTimeParseException ignored){}
-    }
+        String s = text.trim().replaceAll("\\s+","");
+        for (DateTimeFormatter f : TIME_FORMATS){
+            try{
+                return LocalTime.parse(s, f);
+            } catch (DateTimeParseException ignored){}
+        }
 
-    throw new IllegalArgumentException("Invalid format. Please try '1800' or '18:00' ");
-}
+        throw new IllegalArgumentException("Invalid format. Please try '1800' or '18:00' ");
+    }
 }

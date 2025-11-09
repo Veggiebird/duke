@@ -14,8 +14,6 @@ import java.util.Scanner;
  * It has main menu to view shop info, check daily gold price, review historical activity and manage task list like todo, deadline and events.
  *
  */
-
-
 public class Gracee {
     /**
      * Main method that starts the chatbot
@@ -35,13 +33,13 @@ public class Gracee {
         ui.printMainMenu(); // Print main menu
         ui.line();
 
-        boolean chatLive = true;
+        boolean isChatLive = true;
 
-        while (chatLive) {
+        while (isChatLive) {
 
             String inputMain = sc.nextLine();
 
-            switch(graceeParser.parseMain(inputMain)){
+            switch (graceeParser.parseMain(inputMain)){
                 case SHOP: // Main menu: 1. Shop business hour and details.
                     ui.line();
                     ui.printMainMenuShopDetails();
@@ -77,7 +75,7 @@ public class Gracee {
 // ==================================== END mini TASK MENU ===========================================
                 case EXIT: // Main menu: 5. Bye
                     System.out.println("Thank you, Bye");
-                    chatLive = false;
+                    isChatLive = false;
                     break;
 
                 case INVALID:
@@ -86,7 +84,6 @@ public class Gracee {
                     break;
             }
         }
-
         sc.close();
     }
 }

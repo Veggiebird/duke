@@ -4,6 +4,10 @@ import gracee.ui.graceeUi;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * To show gold price
+ */
 public class graceeGoldPrice {
 
     graceeUi ui = new graceeUi(new java.util.Scanner(System.in));
@@ -64,6 +68,5 @@ public class graceeGoldPrice {
             System.out.println("Invalid input. Please enter BUY, SELL or TRADEIN.");
 
         }
-
     }
 }

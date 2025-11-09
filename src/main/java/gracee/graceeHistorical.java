@@ -9,7 +9,12 @@ import java.util.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+/**
+ * Capture, display user historical activities for chatbot
+ * Contains maximum history of 20 lines
+ *
+ * Each entry add with timestamp and will be auto save
+ */
 public class graceeHistorical {
     private static final int MAX_LINES = 20; //only store up to 20 historical action
     private static final Path FILE = Paths.get("data", "history.txt");
@@ -22,6 +27,11 @@ public class graceeHistorical {
     public graceeHistorical() {
         load();
     }
+
+    /**
+     * Add new historical entry
+     * @param entry
+     */
 
     public void add(String entry){
 
@@ -39,9 +49,20 @@ public class graceeHistorical {
         save();
     }
 
+    /**
+     * Return number of historical entries count
+     * @return
+     */
+
     public int size(){
         return historyCap.size();
     }
+
+    /**
+     * Get history with specific index
+     * @param index
+     * @return
+     */
 
     public String get(int index){
         return new ArrayList<>(historyCap).get(index);
@@ -51,9 +72,13 @@ public class graceeHistorical {
         return Collections.unmodifiableList(new ArrayList<>(historyCap));
     }
 
+    /**
+     * Load history from storage file
+     */
+
     private void load(){
         try{
-            if(Files.exists(FILE)){
+            if (Files.exists(FILE)){
                 List<String> lines = Files.readAllLines(FILE);
                 int start = Math.max(0, lines.size() - MAX_LINES);
                 for(String line : lines.subList(start, lines.size())){
@@ -67,6 +92,10 @@ public class graceeHistorical {
             System.err.println("ERROR! Could not load history: " + e.getMessage());
         }
     }
+
+    /**
+     * Save history to storage file
+     */
 
     private void save(){
         try {

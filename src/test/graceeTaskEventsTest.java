@@ -29,8 +29,6 @@ class graceeTaskEventsTest{
                     "2025-09-30", "0000"
             )
         });
-
         assertTrue(ex.getMessage().contains("End date time cannot earlier than start time"));
     }
-
 }
